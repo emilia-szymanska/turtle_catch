@@ -4,36 +4,28 @@ import rospy
 from turtlesim.srv import Spawn
 import sys
 
-#def add_two_ints_client(x, y):
-#    rospy.wait_for_service('add_two_ints')
-#       try:
-#           add_two_ints = rospy.ServiceProxy('add_two_ints', AddTwoInts)
-#           return resp1.sum
-#       except rospy.ServiceException as e:
-#           print("Service call failed: %s"%e)
-   
-#def usage():
-#    return "%s [x y]"%sys.argv[0]
-   
-#   if __name__ == "__main__":
-       #if len(sys.argv) == 3:
-#           x = int(sys.argv[1])
-#           y = int(sys.argv[2])
-#       else:
-#           print(usage())
-#           sys.exit(1)
-#       print("Requesting %s+%s"%(x, y))
-#       print("%s + %s = %s"%(x, y, add_two_ints_client(x, y)))
 
-
-def spawn_turtle_client():
+def spawn_turtle_client(x, y, theta, name):
     rospy.wait_for_service('spawn')
     try:
         spawn_turtle = rospy.ServiceProxy('spawn', Spawn)
-        new_turtle = spawn_turtle(2, 2, 0, "emilka")
+        new_turtle = spawn_turtle(x, y, theta, name)
         return new_turtle
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
 
+
 if __name__ == "__main__":
-    spawn_turtle_client()
+    if len(sys.argv) != 5:
+        x = 2
+        y = 2
+        theta = 0
+        turtle_name = "hunter"
+    else:
+        x = float(sys.argv[1])
+        y = float(sys.argv[2])
+        theta = float(sys.argv[3])
+        turtle_name = sys.argv[4]
+
+    print("Spawning turtle %s in positions x = %s, y = %s, theta = %s"%(turtle_name, str(x), str(y), str(theta)))
+    spawn_turtle_client(x, y, theta, turtle_name)

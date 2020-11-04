@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy
-from turtlesim.srv import Spawn
+
 
 def get_distance(self, goal_x, goal_y):
     distance = sqrt(pow((goal_x - self.pose_x), 2) + (goal_y - self.pose_y), 2)) 
@@ -26,8 +26,6 @@ def x(req):
     #print(req)
     #return SpawnResponse(req.x, req.y, req.z, req.name)
 
-def x():
-    print("ajajaj")
 
 
 def spawn_turtle():
