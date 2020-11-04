@@ -1,0 +1,2 @@
+turtle_catch
+-DCATKIN_DEVEL_PREFIX=/home/emilia/rps_ws/devel -DCMAKE_INSTALL_PREFIX=/home/emilia/rps_ws/install -G Unix Makefiles
