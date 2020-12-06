@@ -16,6 +16,7 @@ def spawn_turtle_client(x, y, theta, name):
 
 
 if __name__ == "__main__":
+    rospy.init_node("spawn_turtle")
     if len(sys.argv) != 5:
         x = 2
         y = 2
