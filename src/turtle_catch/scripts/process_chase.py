@@ -37,28 +37,54 @@ if __name__ == "__main__":
     # the `to_sec()` method.
     # See:
     # http://wiki.ros.org/rospy/Overview/Time
-    #t = (now - initial_time).to_sec()
     chaser_poses = []
     runner_poses = []
+    last_t_chaser = 0
+    last_t_runner = 0
+    first_t_chaser = 0
+    first_t_runner = 0
+    first_chaser = True
+    first_runner = True
+
 
     with rosbag.Bag(outbag_filename, 'w') as outbag:
         for topic, msg, t in rosbag.Bag(inbag_filename, 'r').read_messages():
             if topic == CHASER_POSE_TOPIC:
+                if first_chaser:
+                    first_t_chaser = t
+                    first_chaser = False
                 outbag.write('/chaser/pose', msg, t)
                 chaser_poses.append(msg)
+                last_t_chaser = t
                 msg_counter += 1
             elif topic == RUNNER_POSE_TOPIC:
+                if first_runner:
+                    first_t_runner = t
+                    first_runner = False
                 outbag.write('/runner/pose', msg, t)
                 runner_poses.append(msg)
+                last_t_runner = t
                 msg_counter += 1
 
-    runner_dist = round(covered_dist(runner_poses), 2)
-    chaser_dist = round(covered_dist(chaser_poses), 2)
+    runner_t = (last_t_runner - first_t_runner).to_sec()
+    chaser_t = (last_t_chaser - first_t_chaser).to_sec()
     
+
+    runner_dist = covered_dist(runner_poses)
+    chaser_dist = covered_dist(chaser_poses)
+    
+    chaser_vel = chaser_dist / chaser_t
+    runner_vel = runner_dist / runner_t
+
+
     print('Runner')
-    print(f'  Covered distance: {runner_dist} m')
+    print(f'  Covered distance: {runner_dist:.2f} m')
+    print(f'  Average velocity: {runner_vel:.2f} m/s')
 
     print('Chaser')
-    print(f'  Covered distance: {chaser_dist} m')
+    print(f'  Covered distance: {chaser_dist:.2f} m')
+    print(f'  Average velocity: {chaser_vel:.2f} m/s')
+
+    print(f'Chase duration: {chaser_t:.2f} s')
 
     print(f'Wrote {msg_counter} messages to {outbag_filename}')
