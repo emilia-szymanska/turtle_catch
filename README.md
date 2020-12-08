@@ -16,5 +16,12 @@ You might need to source the workspace:
 source devel/setup.bash
 ```
 
+### Additional scripts
+An additional script (process\_chase.py) has been added to process a bagfile with recorded topics of a chase. The script can be run separately:
+```
+./process_chase.py input_bagfile.bag 
+```
+The output will be a processed bagfile (processed\_chase.bag) with remapped topics (/runner/pose and /chaser/pose) and a set of information regarding covered distance, duration of a chase and average velocity of each turtle.
+
 ### Authors
 * **Emilia Szymańska**
