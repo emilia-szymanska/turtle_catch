@@ -7,7 +7,7 @@ ROS package expanding turtlesim options - allows to run turtlesim with a turtle 
 To start with this project, ROS noetic needs to be installed and sourced on the computer.
 
 ### Running the program
-After cloning this repository to your computer, simply run the command in a terminal:
+After cloning this repository to your computer (and to your workspace's 'src' directory), simply run the command in a terminal:
 ```
 roslaunch turtle_catch turtle_catch.launch
 ```

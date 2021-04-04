@@ -1,8 +1,0 @@
-prefix=/home/emilia/rps_ws/devel
-
-Name: turtle_catch
-Description: Description of turtle_catch
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
